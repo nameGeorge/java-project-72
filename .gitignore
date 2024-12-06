@@ -36,3 +36,5 @@ bin/
 .vscode/
 ### Mac OS ###
 .DS_Store
+### jte ###
+jte-classes
