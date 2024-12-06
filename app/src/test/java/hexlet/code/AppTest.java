@@ -15,7 +15,7 @@ public class AppTest {
 
     @BeforeAll
         public static void beforeAll() throws SQLException, IOException {
-            app = App.getApp();
+        app = App.getApp();
             app.start(0);
             int port = app.port();
             baseUrl = "http://localhost:" + port;
