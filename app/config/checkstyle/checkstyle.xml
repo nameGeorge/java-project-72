@@ -130,7 +130,10 @@
         <!-- See https://checkstyle.org/config_coding.html -->
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
-        <!-- <module name="HiddenField"/> -->
+        <module name="HiddenField" >
+            <property name="ignoreSetter" value="true" />
+            <property name="ignoreConstructorParameter" value="true" />
+        </module>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
         <!-- <module name="MagicNumber"/> -->
@@ -140,13 +143,11 @@
         <module name="SimplifyBooleanReturn"/>
         <!-- Checks for class design                         -->
         <!-- See https://checkstyle.org/config_design.html -->
-        <module name="DesignForExtension"/>
+        <!-- <module name="DesignForExtension"/> -->
         <module name="FinalClass"/>
         <!-- <module name="HideUtilityClassConstructor"/> -->
         <module name="InterfaceIsType"/>
-        <!-- <module name = "VisibilityModifier">
-          <property name="protectedAllowed" value="true" />
-        </module> -->
+        <!-- <module name="VisibilityModifier"/> -->
         <!-- Miscellaneous other checks.                   -->
         <!-- See https://checkstyle.org/config_misc.html -->
         <module name="ArrayTypeStyle"/>
@@ -161,6 +162,9 @@
             <property name="file" value="${org.checkstyle.sun.suppressionxpathfilter.config}"
                       default="checkstyle-xpath-suppressions.xml" />
             <property name="optional" value="true"/>
+        </module>
+        <module name="SuppressionCommentFilter">
+            <property name="checkFormat" value="MethodLength"/>
         </module>
     </module>
 </module>
