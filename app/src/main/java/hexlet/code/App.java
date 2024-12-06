@@ -17,8 +17,6 @@ public class App {
             ctx.result("Hello, World!");
         });
         return app;
-
-
     }
     public static void main(String[] args) {
         Javalin app = getApp();
