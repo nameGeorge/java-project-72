@@ -37,3 +37,4 @@ bin/
 .DS_Store
 gradlew.bat
 .idea/
+jte-classes/

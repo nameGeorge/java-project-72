@@ -2,6 +2,8 @@ plugins {
     application
     checkstyle
     jacoco
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.freefair.lombok") version "8.6"
 }
 
 group = "hexlet.code"
@@ -15,8 +17,11 @@ application {
     mainClass.set("hexlet.code.App")
 }
 dependencies {
-    compileOnly("org.projectlombok:lombok:1.18.32")
-    annotationProcessor("org.projectlombok:lombok:1.18.32")
+    //compileOnly("org.projectlombok:lombok:1.18.32")
+    //annotationProcessor("org.projectlombok:lombok:1.18.32")
+    implementation("com.h2database:h2:2.2.220")
+    implementation("org.postgresql:postgresql:42.7.3")
+    implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("io.javalin:javalin:6.1.3")
     implementation("org.slf4j:slf4j-simple:2.0.7")
     // Шаблонизатор и его интеграция с Javalin
