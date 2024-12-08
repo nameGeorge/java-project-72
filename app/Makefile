@@ -1,7 +1,7 @@
 install:
 	./gradlew clean install
-run:
-	./gradlew run
+run-dist:
+	./build/install/app/bin/app
 build:
 	./gradlew clean build
 lint:
