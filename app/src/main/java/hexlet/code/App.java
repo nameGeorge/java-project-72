@@ -6,6 +6,7 @@ import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
 import hexlet.code.controller.RootController;
+import hexlet.code.controller.UrlsCheckController;
 import hexlet.code.controller.UrlsController;
 import hexlet.code.repository.BaseRepository;
 import hexlet.code.util.NamedRoutes;
@@ -31,14 +32,17 @@ public final class App {
 
     public static Javalin getApp() throws SQLException, IOException {
         setConnection();
+
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
+
         app.get(NamedRoutes.rootPath(), RootController::index);
         app.post(NamedRoutes.urlsPath(), UrlsController::create);
-        app.get(NamedRoutes.urlsPath(), hexlet.code.controller.UrlsController::index);
-        app.get(NamedRoutes.urlPath("{id}"), hexlet.code.controller.UrlsController::show);
+        app.get(NamedRoutes.urlsPath(), UrlsController::index);
+        app.get(NamedRoutes.urlPath("{id}"), UrlsController::show);
+        app.post(NamedRoutes.urlCheckPath("{id}"), UrlsCheckController::create);
         return app;
     }
 
@@ -57,8 +61,10 @@ public final class App {
         var urlLocal = String.format("jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1;", DB_NAME_LOCAL);
         var url = System.getenv().getOrDefault("JDBC_DATABASE_URL", urlLocal);
         hikariConfig.setJdbcUrl(url);
+
         var dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
+
         log.info(sql);
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
