@@ -27,8 +27,6 @@ public class UrlsController {
             if (UrlRepository.findByName(verifyUrl).isPresent()) {
                 ctx.sessionAttribute("flash", "Страница уже существует");
                 ctx.sessionAttribute("flash-type", "info");
-                //ctx.sessionAttribute("flash-type", "warning");
-                //ctx.sessionAttribute("flash-type", "dismissible");
             } else {
                 var url = new Url(getVerifyUrl(verifyUrl));
                 UrlRepository.save(url);
@@ -45,10 +43,6 @@ public class UrlsController {
             ctx.sessionAttribute("flash-type", "warning");
             ctx.sessionAttribute("url-value", ctx.formParam("url"));
             ctx.redirect(NamedRoutes.rootPath());
-            /*var page = new MainPage(ctx.formParam("url"));
-            page.setFlash(ctx.consumeSessionAttribute("flash"));
-            page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
-            ctx.render("index.jte", model("page", page)).status(422);*/
         }
     }
 

@@ -37,8 +37,8 @@ public final class App {
         });
         app.get(NamedRoutes.rootPath(), RootController::index);
         app.post(NamedRoutes.urlsPath(), UrlsController::create);
-        app.get(NamedRoutes.urlsPath(), UrlsController::index);
-        app.get(NamedRoutes.urlPath("{id}"), UrlsController::show);
+        app.get(NamedRoutes.urlsPath(), hexlet.code.controller.UrlsController::index);
+        app.get(NamedRoutes.urlPath("{id}"), hexlet.code.controller.UrlsController::show);
         return app;
     }
 
@@ -74,7 +74,7 @@ public final class App {
         }
     }
 
-    private static int getPort() {
+    public static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "7070");
         return Integer.valueOf(port);
     }
