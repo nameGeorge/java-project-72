@@ -1,10 +1,13 @@
 package hexlet.code.repository;
+
 import hexlet.code.model.Url;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         var sql = "INSERT INTO urls (name) VALUES (?)";
@@ -20,6 +23,7 @@ public class UrlRepository extends BaseRepository {
             }
         }
     }
+
     public static Optional<Url> find(Long id) throws SQLException {
         var sql = "SELECT * FROM urls WHERE id = ?";
         try (var conn = dataSource.getConnection();
@@ -36,6 +40,7 @@ public class UrlRepository extends BaseRepository {
             return Optional.empty();
         }
     }
+
     public static Optional<Url> findByName(String name) throws SQLException {
         var sql = "SELECT * FROM urls WHERE LOWER(name) = LOWER(?)";
         try (var conn = dataSource.getConnection();
@@ -52,6 +57,7 @@ public class UrlRepository extends BaseRepository {
             return Optional.empty();
         }
     }
+
     public static List<Url> getEntities() throws SQLException {
         var sql = "SELECT * FROM urls";
         try (var conn = dataSource.getConnection();

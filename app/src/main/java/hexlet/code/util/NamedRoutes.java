@@ -25,4 +25,3 @@ public class NamedRoutes {
         return urlsPath().concat("/").concat(id).concat("/checks");
     }
 }
-

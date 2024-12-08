@@ -2,6 +2,7 @@
 @import hexlet.code.util.Utils
 @import hexlet.code.dto.urls.UrlsPage
 @param UrlsPage page
+
 @template.layout.page(
 page = page,
 content = @`
@@ -43,4 +44,3 @@ content = @`
     </div>
 </section>
 `
-)

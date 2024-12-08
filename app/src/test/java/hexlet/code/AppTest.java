@@ -129,7 +129,6 @@ public class AppTest {
     }
 
     @Test
-
         public void testUrlNotFound() {
             JavalinTest.test(app, (server, client) -> {
                 var response = client.get(NamedRoutes.urlPath(99999L));
