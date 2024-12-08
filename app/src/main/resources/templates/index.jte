@@ -1,6 +1,10 @@
+@import hexlet.code.dto.MainPage
+@param MainPage page
+
 @template.layout.page(
+page = page,
     content = @`
-        <main class="flex-grow-1">
+
             <section>
                 <div class="container-fluid bg-dark p-5">
                     <div class="row">
@@ -11,7 +15,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-floating">
-                                            <input id="url-input" autofocus="" type="text" required="" name="url" aria-label="url" class="form-control w-100" placeholder="ссылка" autocomplete="off">
+                                            <input id="url-input" type="url" required name="url" aria-label="url" class="form-control w-100" autofocus placeholder="ссылка" autocomplete="off" value="${page.getUrlValue()}">
                                             <label for="url-input">Ссылка</label>
                                         </div>
                                     </div>
@@ -25,6 +29,5 @@
                     </div>
                 </div>
             </section>
-        </main>
     `
 )
