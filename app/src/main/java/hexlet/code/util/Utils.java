@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 public class Utils {
+
     public static boolean checkUrl(String url) {
         try {
             new URI(url).toURL();

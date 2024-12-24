@@ -15,46 +15,45 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AppTest {
-    private Javalin app;
-    private static MockWebServer mockServer = new MockWebServer();
+    private static Javalin app;
+    private static MockWebServer mockWebServer;
+
+    public static final String TEST_HTML_PAGE = "index.html";
+
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+    }
+
+    private static String readFixture(String fileName) throws Exception {
+        Path filePath = getFixturePath(fileName);
+        return Files.readString(filePath).trim();
+    }
 
     @BeforeAll
-    public static void beforeAll() throws IOException {
-        var body = """
-                    <!DOCTYPE html>
-                    <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="description" content="Analyzer content">
-                            <title>Анализатор страниц</title>
-                        </head>
-                       <body>
-                            <main>
-                                <section>
-                                    <h1>test mock</h1>
-                                </section>
-                            </main>
-                       </body>
-                   </html>
-                """;
+    static void generalSetUp() throws Exception {
+        mockWebServer = new MockWebServer();
         MockResponse mockResponse = new MockResponse()
-                .addHeader("Content-Type", "application/json; charset=utf-8")
-                .addHeader("Cache-Control", "no-cache")
-                .setBody(body);
-        mockServer.enqueue(mockResponse);
-        mockServer.start();
+                .setBody(readFixture(TEST_HTML_PAGE))
+                .setResponseCode(200);
+        mockWebServer.enqueue(mockResponse);
+        mockWebServer.start();
     }
 
     @AfterAll
     public static void afterAll() throws IOException {
-        mockServer.shutdown();
+        mockWebServer.shutdown();
     }
 
     @BeforeEach
@@ -125,7 +124,7 @@ public class AppTest {
 
     @Test
     public void testMockRunCheckUrl() {
-        HttpUrl baseUrl = mockServer.url("/");
+        HttpUrl baseUrl = mockWebServer.url("/");
         JavalinTest.test(app, (server, client) -> {
             client.post("/urls", "url=".concat(baseUrl.toString()));
             client.post(NamedRoutes.urlCheckPath(1L));
@@ -139,7 +138,7 @@ public class AppTest {
             assertThat(urlCheck.getTitle()).isEqualTo("Анализатор страниц");
             assertThat(urlCheck.getDescription()).isEqualTo("Analyzer content");
 
-            RecordedRequest request1 = mockServer.takeRequest();
+            RecordedRequest request1 = mockWebServer.takeRequest();
             assertEquals("/", request1.getPath());
         });
     }
