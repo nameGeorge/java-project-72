@@ -24,7 +24,6 @@ public class UrlsController {
         try {
             var urlName = ctx.formParamAsClass("url", String.class)
                     .check(value -> !value.isEmpty(), "Название не должно быть пустым")
-                    .check(value -> !value.equals("http://111.ru"), "проверка контроля ошибки!!")
                     .check(Utils::checkUrl, "Некорректный URL")
                     .get();
             var verifyUrl = getVerifyUrl(urlName);
